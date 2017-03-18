@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="boxColorGreen">#8cdf3d</color>
+    <color name="boxColorPink">#df3d6e</color>
+    <color name="fabColor">#f4ce42</color>
+    <color name="textColor">#303030</color>
+</resources>
