@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,28 +23,29 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.zip.Inflater;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG_RETAINED_FRAGMENT = "TasksRetain";
-    private TasksRetain mRetainedFragment;
+    private static final String TAG_RETAINED_FRAGMENT = "TasksRetainFragment";
+    private TasksRetainFragment mRetainedFragment;
     private ArrayList<TodoTask> taskListArg;
     private RecyclerView mRecyclerView;
     private TodoTaskAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    EditText mTextInput;
+    private Context context;
+    private FragmentManager fm;
     FloatingActionButton mFab;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Context context = (Context) this;
+        context = this;
 
-        FragmentManager fm = getFragmentManager();
-        mRetainedFragment = (TasksRetain) fm.findFragmentByTag(TAG_RETAINED_FRAGMENT);
-
+        fm = getFragmentManager();
+        mRetainedFragment = (TasksRetainFragment) fm.findFragmentByTag(TAG_RETAINED_FRAGMENT);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -77,39 +79,45 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (mRetainedFragment == null || mAdapter.getTasksList() != mRetainedFragment.getData()) {
-            mRetainedFragment = new TasksRetain();
+            mRetainedFragment = new TasksRetainFragment();
             fm.beginTransaction().add(mRetainedFragment, TAG_RETAINED_FRAGMENT).commit();
             mRetainedFragment.setData(mAdapter.getTasksList());
         }
 
         mRecyclerView.setAdapter(mAdapter);
-        mTextInput = (EditText) findViewById(R.id.text_box);
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
 
         mFab.setOnClickListener(new View.OnClickListener() {
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
             @Override
             public void onClick(View v) {
-                String formattedDate = df.format(c.getTime());
-                if(!mTextInput.getText().toString().equals("")) {
-                    mAdapter.addItemToList(new TodoTask(mTextInput.getText().toString(), formattedDate));
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "You can not  submit empty task.", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-
-        mTextInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
+                LayoutInflater inflater = getLayoutInflater();
+                final View inf = inflater.inflate(R.layout.dialog_add, null);
+                new AlertDialog.Builder(context)
+                        .setView(inf)
+                        .setTitle("Add Task")
+                        .setMessage("Enter the content of todo task.")
+                        .setPositiveButton(R.string.add_btn, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                                String formattedDate = df.format(c.getTime());
+                                EditText et = (EditText)inf.findViewById(R.id.add_task);
+                                if(!et.getText().toString().equals("")) {
+                                    mAdapter.addItemToList(new TodoTask(et.getText().toString(), formattedDate));
+                                }
+                                else{
+                                    Toast.makeText(MainActivity.this, "You can not submit empty task.", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(R.drawable.ic_content_paste_black_24dp)
+                        .show();
             }
         });
 
@@ -123,28 +131,40 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemThatWasClickedId = item.getItemId();
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
         if (itemThatWasClickedId == R.id.menu_add_btn) {
-            String formattedDate = df.format(c.getTime());
-            if(!mTextInput.getText().toString().equals("")) {
-                mAdapter.addItemToList(new TodoTask(mTextInput.getText().toString(), formattedDate));
-            }
-            else{
-                Toast.makeText(MainActivity.this, "You can not  submit empty task.", Toast.LENGTH_LONG).show();
-            }
+            LayoutInflater inflater = getLayoutInflater();
+            final View inf = inflater.inflate(R.layout.dialog_add, null);
+            new AlertDialog.Builder(context)
+                    .setView(inf)
+                    .setTitle("Add Task")
+                    .setMessage("Enter the content of todo task.")
+                    .setPositiveButton(R.string.add_btn, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                            String formattedDate = df.format(c.getTime());
+                            EditText et = (EditText)inf.findViewById(R.id.add_task);
+                            if(!et.getText().toString().equals("")) {
+                                mAdapter.addItemToList(new TodoTask(et.getText().toString(), formattedDate));
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "You can not submit empty task.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(R.drawable.ic_content_paste_black_24dp)
+                    .show();
             return true;
+        }
+        else if (itemThatWasClickedId == R.id.menu_clear_btn) {
+            mAdapter.clearList();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 }
-
-
-
-
-

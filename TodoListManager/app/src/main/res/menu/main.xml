@@ -4,6 +4,11 @@
     <item
         android:id="@+id/menu_add_btn"
         android:orderInCategory="1"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/add_btn"/>
+    <item
+        android:id="@+id/menu_clear_btn"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:title="@string/clear"/>
 </menu>

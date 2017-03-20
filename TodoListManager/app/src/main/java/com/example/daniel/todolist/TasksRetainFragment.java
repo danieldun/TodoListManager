@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by Daniel on 16/03/2017.
  */
 
-public class TasksRetain extends Fragment {
+public class TasksRetainFragment extends Fragment {
 
     private ArrayList<TodoTask> taskList;
 

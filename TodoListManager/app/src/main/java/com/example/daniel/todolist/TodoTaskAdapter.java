@@ -93,6 +93,10 @@ public class TodoTaskAdapter extends RecyclerView.Adapter<TodoTaskAdapter.MyView
         taskList.remove(item);
         notifyDataSetChanged();
     }
+    public void clearList(){
+        taskList.clear();
+        notifyDataSetChanged();
+    }
     public ArrayList<TodoTask> getTasksList(){
         return taskList;
     }
