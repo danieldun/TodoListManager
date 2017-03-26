@@ -1,9 +1,9 @@
 package com.example.daniel.todolist;
 
+
 import android.app.Fragment;
 import android.os.Bundle;
 
-import java.util.ArrayList;
 
 /**
  * Created by Daniel on 16/03/2017.
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TasksRetainFragment extends Fragment {
 
-    private ArrayList<TodoTask> taskList;
+    private TodoTaskAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,11 +19,12 @@ public class TasksRetainFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void setData(ArrayList<TodoTask> taskList) {
-        this.taskList = taskList;
+    public void setData(TodoTaskAdapter adapter) {
+        this.adapter = adapter;
     }
 
-    public ArrayList<TodoTask> getData() {
-        return taskList;
+    public TodoTaskAdapter getData() {
+        return adapter;
     }
+
 }

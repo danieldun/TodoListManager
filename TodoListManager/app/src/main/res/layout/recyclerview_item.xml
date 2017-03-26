@@ -9,27 +9,53 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date_text"
+        android:id="@+id/creation_date_text"
         android:textSize="12sp"
         android:textStyle="italic"
         android:layout_gravity="start|top"
-        android:paddingStart="10dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp" />
+        android:paddingStart="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        android:background="@drawable/task_background_box_green"
-        android:id="@+id/task_text" />
+        android:id="@+id/remainder_date_text"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:layout_gravity="start|top"
+        android:paddingStart="10dp"
+        android:paddingBottom="8dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:paddingEnd="4dp"
+            android:id="@+id/task_checkbox" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
+            android:background="@drawable/task_background_box_blue"
+            android:id="@+id/task_text"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="32dp"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -39,6 +65,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="8dp"/>
+
 
 
 </LinearLayout>

@@ -6,11 +6,21 @@ package com.example.daniel.todolist;
 
 public class TodoTask {
     protected String taskText;
-    protected String taskDate;
-    protected String taskBackground;
+    protected String taskCreationDate;
+    protected String taskRemainderDate;
+    protected boolean taskCheck;
 
-    public TodoTask(String taskText, String taskDate) {
+
+    public TodoTask(String taskText, String taskCreationDate, String taskRemainderDate) {
         this.taskText = taskText;
-        this.taskDate = taskDate;
+        this.taskCreationDate = taskCreationDate;
+        this.taskRemainderDate = taskRemainderDate;
+        this.taskCheck = false;
+    }
+    public void setCheck(boolean value){
+        taskCheck = value;
+    }
+    public boolean getCheck(){
+        return taskCheck;
     }
 }
