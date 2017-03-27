@@ -22,8 +22,7 @@ import java.util.ArrayList;
 public class TodoTaskAdapter extends RecyclerView.Adapter<TodoTaskAdapter.MyViewHolder> {
 
     private final OnItemClickListener listener;
-    private static ArrayList<TodoTask> taskList = new ArrayList<>();
-
+    private final ArrayList<TodoTask> taskList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView task;
@@ -39,27 +38,26 @@ public class TodoTaskAdapter extends RecyclerView.Adapter<TodoTaskAdapter.MyView
             taskCheckbox = (CheckBox) view.findViewById(R.id.task_checkbox);
 
         }
-        public void bind(final TodoTask item, final OnItemClickListener listener) {
+        public void bind(final int i, final OnItemClickListener listener) {
             task.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override public boolean onLongClick(View v) {
-                    listener.onItemLongClick(item);
+                    listener.onItemLongClick(i);
                     return false;
                 }
             });
 
             task.setOnClickListener(new View.OnClickListener(){
                 @Override public void onClick(View v) {
-                    listener.onItemClick(item,v);
+                    listener.onItemClick(i,v);
                 }
             });
         }
     }
 
-    public TodoTaskAdapter(OnItemClickListener listener) {
+    public TodoTaskAdapter(ArrayList<TodoTask> taskList, OnItemClickListener listener) {
         this.listener = listener;
-        notifyDataSetChanged();
+        this.taskList = taskList;
     }
-
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
@@ -103,7 +101,7 @@ public class TodoTaskAdapter extends RecyclerView.Adapter<TodoTaskAdapter.MyView
                 }
             }
         });
-        holder.bind(taskList.get(position), listener);
+        holder.bind(position, listener);
     }
 
     @Override
@@ -122,14 +120,20 @@ public class TodoTaskAdapter extends RecyclerView.Adapter<TodoTaskAdapter.MyView
         taskList.add(item);
         notifyDataSetChanged();
     }
+
     public void removeItemToList(TodoTask item){
         item.setCheck(false);
         taskList.remove(item);
         notifyDataSetChanged();
     }
+
     public void clearList(){
         taskList.clear();
         notifyDataSetChanged();
+    }
+
+    public ArrayList<TodoTask> getTaskList(){
+        return taskList;
     }
 
 }

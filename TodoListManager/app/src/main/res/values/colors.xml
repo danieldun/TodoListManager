@@ -7,4 +7,5 @@
     <color name="boxColorPink">#df3d6e</color>
     <color name="fabColor">#f4ce42</color>
     <color name="textColor">#303030</color>
+    <color name="checkboxColor">#8ce236</color>
 </resources>

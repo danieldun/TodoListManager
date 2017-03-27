@@ -7,6 +7,6 @@ import android.view.View;
  */
 
 public interface OnItemClickListener {
-    void onItemClick(TodoTask item,View v);
-    void onItemLongClick(TodoTask item);
+    void onItemClick(int i,View v);
+    void onItemLongClick(int i);
 }

@@ -3,6 +3,7 @@ package com.example.daniel.todolist;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import java.util.ArrayList;
 
 
 /**
@@ -11,20 +12,21 @@ import android.os.Bundle;
 
 public class TasksRetainFragment extends Fragment {
 
-    private TodoTaskAdapter adapter;
-
+    private ArrayList<TodoTask> taskList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
 
-    public void setData(TodoTaskAdapter adapter) {
-        this.adapter = adapter;
+    public void setData(ArrayList<TodoTask> taskList) {
+        this.taskList = taskList;
     }
 
-    public TodoTaskAdapter getData() {
-        return adapter;
+    public ArrayList<TodoTask> getData() {
+        return taskList;
     }
+
+
 
 }

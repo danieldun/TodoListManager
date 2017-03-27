@@ -1,5 +1,6 @@
 package com.example.daniel.todolist;
 
+
 /**
  * Created by Daniel on 16/03/2017.
  */
@@ -23,4 +24,5 @@ public class TodoTask {
     public boolean getCheck(){
         return taskCheck;
     }
+
 }
