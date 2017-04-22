@@ -2,6 +2,7 @@ package com.example.daniel.todolist;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements RemoveTaskDialogF
             public void onItemClick(final int i, View v) {
                 popupOnList(i,v);
             }
-        });
+        }, this);
 
         if (mRetainedFragment == null || mAdapter.getTaskList() != mRetainedFragment.getData()) {
             mRetainedFragment = new TasksRetainFragment();
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements RemoveTaskDialogF
         }
 
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.updateFromDatabase();
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
 

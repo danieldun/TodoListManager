@@ -41,25 +41,22 @@ public class AddTaskDialogFragment extends DialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         v = inflater.inflate(R.layout.dialog_add, null);
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        final String formattedDate = "Created on: " + df.format(c.getTime());
-
-
-        DatePicker datePicker = (DatePicker)v.findViewById(R.id.date_picker);
+        final DatePicker datePicker = (DatePicker)v.findViewById(R.id.date_picker);
         datePicker.setMinDate(0);
         datePicker.setMinDate(System.currentTimeMillis()-1000);
-
-        int   day  = datePicker.getDayOfMonth();
-        int   month = datePicker.getMonth();
-        int   year = datePicker.getYear() -1900;
-        final String remainderDate = "Remind on: " + df.format(new Date(year, month, day));
-
 
         builder.setView(v)
                 .setTitle("Add Task")
                 .setPositiveButton(R.string.add_btn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                        String formattedDate = "Created on: " + df.format(c.getTime());
+
+                        int   day  = datePicker.getDayOfMonth();
+                        int   month = datePicker.getMonth();
+                        int   year = datePicker.getYear() -1900;
+                        String remainderDate = "Remind on: " + df.format(new Date(year, month, day));
                         ((YesNoAddListener) getActivity()).onAddYes(v, formattedDate, remainderDate);
                     }
                 })
